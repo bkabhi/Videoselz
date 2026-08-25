@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Videoselz — shoppable video performance for your storefront."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Video performance · Videoselz</title>
+    <script>
+      // Applied before first paint so a dark-theme user never sees a white
+      // flash. Kept inline and tiny for exactly that reason.
+      (function () {
+        try {
+          var stored = localStorage.getItem('videoselz.theme');
+          var theme =
+            stored ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.dataset.theme = theme;
+        } catch (_) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

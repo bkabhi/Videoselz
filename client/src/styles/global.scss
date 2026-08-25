@@ -1,0 +1,171 @@
+@use '_tokens.scss' as *;
+@use '_mixins.scss' as *;
+
+/* ---------------------------------------------------------------------------
+   Reset — only what this app actually needs. A full normalize.css would be
+   mostly dead rules for a single-screen dashboard.
+   --------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  // The app bar is sticky; this keeps an anchored element from hiding under it.
+  scroll-padding-top: calc(var(--app-bar-height) + var(--space-4));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--surface-canvas);
+
+  // Explicit antialiasing: without it the platform face renders noticeably
+  // heavier on macOS at the small sizes this UI leans on.
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Theme changes should feel like a dimmer, not a cut. Limited to the two
+  // properties that actually change, so it never animates layout.
+  @include motion-safe {
+    transition:
+      background-color var(--duration-slow) var(--ease-out),
+      color var(--duration-slow) var(--ease-out);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Browser surfaces.
+
+   Selection, caret, scrollbars, focus rings and control accents ship with
+   defaults that belong to no design system. Theming them is the cheapest
+   signal that a page was built rather than assembled.
+   --------------------------------------------------------------------------- */
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+:root {
+  caret-color: var(--accent);
+  accent-color: var(--accent);
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border: 3px solid transparent;
+  border-radius: var(--radius-full);
+  background-clip: content-box;
+
+  &:hover {
+    background-color: var(--scrollbar-thumb-hover);
+  }
+}
+
+// Every element gets the same ring. Individual components add offset tweaks
+// via the focus-ring mixin; none of them redefine the color or width.
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+   --------------------------------------------------------------------------- */
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+// Skip link: the first tab stop on the page, revealed only on focus.
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background-color: var(--surface-overlay);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-200%);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Global motion opt-out. Individual components use the motion-safe mixin, but
+   this catches anything third-party or missed.
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

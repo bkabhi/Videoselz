@@ -1,0 +1,216 @@
+// ---------------------------------------------------------------------------
+// Design tokens
+//
+// Every value the interface uses lives here. Components reference custom
+// properties, never literals — a hex code inside a *.module.scss file is a bug,
+// not a shortcut. Custom properties (rather than Sass variables) are what let
+// the theme swap at runtime without a rebuild.
+//
+// The rationale behind these choices is documented in /DESIGN.md.
+// ---------------------------------------------------------------------------
+
+// Sass-side breakpoints. These cannot be custom properties: media queries are
+// evaluated before the cascade and cannot read var().
+$bp-sm: 640px;
+$bp-md: 900px;
+$bp-lg: 1200px;
+
+:root {
+  /* -- Type ------------------------------------------------------------- */
+
+  // The platform UI face, on purpose. It renders at native quality on every
+  // machine, ships zero bytes, and cannot fail to load. A webfont would buy
+  // nothing here that the OS does not already provide better.
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    'Noto Sans', Arial, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    monospace;
+
+  // Fixed scale, ~1.15–1.2 ratio. Not fluid: see DESIGN.md.
+  --text-2xs: 0.6875rem; /* 11px — column headers, chips */
+  --text-xs: 0.75rem;    /* 12px — secondary metadata */
+  --text-sm: 0.8125rem;  /* 13px — table cells, controls */
+  --text-base: 0.875rem; /* 14px — body */
+  --text-md: 1rem;       /* 16px — section headings */
+  --text-lg: 1.25rem;    /* 20px — funnel counts */
+  --text-xl: 1.75rem;    /* 28px — page title */
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  // Optical correction: larger text needs tighter tracking, small caps need
+  // looser. Applied per role rather than globally.
+  --tracking-tight: -0.018em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+
+  /* -- Space — 4px grid -------------------------------------------------- */
+
+  --space-1: 0.25rem;  /* 4  */
+  --space-2: 0.5rem;   /* 8  */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.25rem;  /* 20 */
+  --space-6: 1.5rem;   /* 24 */
+  --space-8: 2rem;     /* 32 */
+  --space-10: 2.5rem;  /* 40 */
+  --space-12: 3rem;    /* 48 */
+
+  /* -- Shape ------------------------------------------------------------- */
+
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 7px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
+
+  /* -- Motion ------------------------------------------------------------ */
+
+  // Exponential ease-out: fast departure, long settle. Reads as responsive
+  // rather than as animation.
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 260ms;
+
+  /* -- Layout ------------------------------------------------------------ */
+
+  --app-bar-height: 3.5rem;
+  --content-max: 82rem;
+  --row-height: 3.25rem;
+
+  /* -- Elevation --------------------------------------------------------- */
+
+  --shadow-sm: 0 1px 2px var(--shadow-tint-a), 0 1px 1px var(--shadow-tint-b);
+  --shadow-md: 0 4px 12px -2px var(--shadow-tint-a), 0 2px 4px -2px var(--shadow-tint-b);
+  --shadow-lg: 0 16px 36px -10px var(--shadow-tint-c), 0 4px 10px -4px var(--shadow-tint-a);
+}
+
+/* ===========================================================================
+   Light — the default. The merchant works at a desk in a lit room.
+   =========================================================================== */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --surface-canvas: #f6f7f6;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f0f2f1;
+  --surface-overlay: #ffffff;
+  --surface-hover: #f3f5f4;
+  --surface-active: #e9edeb;
+
+  --border-subtle: #e6e9e7;
+  --border-default: #d8ddda;
+  --border-strong: #bcc4c0;
+
+  --text-primary: #131816;
+  --text-secondary: #59635e;
+  --text-tertiary: #8a938e;
+  --text-inverse: #ffffff;
+
+  // Jade. Chosen over the default indigo because this product measures money
+  // moving through a funnel, and the accent doubles as the funnel's scale.
+  --accent: #0d7a56;
+  --accent-hover: #0a6547;
+  --accent-active: #085239;
+  --accent-subtle: #e6f4ee;
+  --accent-border: #a9d9c5;
+  --accent-text: #0a6247;
+
+  // One hue at increasing depth, so the strip reads as a narrowing
+  // progression rather than as three unrelated categories.
+  --funnel-1: #9ed4bd;
+  --funnel-2: #3f9e79;
+  --funnel-3: #0d7a56;
+
+  --positive: #1a7f4f;
+  --positive-subtle: #e6f3ec;
+  --negative: #a83232;
+  --negative-subtle: #fbeceb;
+  --warning: #8a5a11;
+  --warning-subtle: #fbf2e2;
+
+  --focus-ring: #0d7a56;
+  --selection-bg: #cdeadd;
+  --selection-text: #0a3a29;
+
+  --shadow-tint-a: rgb(19 24 22 / 0.07);
+  --shadow-tint-b: rgb(19 24 22 / 0.04);
+  --shadow-tint-c: rgb(19 24 22 / 0.14);
+
+  --scrollbar-thumb: #c6cdc9;
+  --scrollbar-thumb-hover: #a8b1ac;
+
+  --skeleton-base: #eceeed;
+  --skeleton-sheen: #f6f7f7;
+}
+
+/* ===========================================================================
+   Dark
+   =========================================================================== */
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --surface-canvas: #0b0e0d;
+  --surface-raised: #131817;
+  --surface-sunken: #1a201e;
+  --surface-overlay: #1a201e;
+  --surface-hover: #1c2321;
+  --surface-active: #232b28;
+
+  --border-subtle: #212927;
+  --border-default: #2c3633;
+  --border-strong: #43504b;
+
+  --text-primary: #e8ecea;
+  --text-secondary: #98a39e;
+  --text-tertiary: #6b756f;
+  --text-inverse: #08120d;
+
+  // Lifted and desaturated: the light theme's jade fails contrast on a dark
+  // surface, so the dark theme gets its own value rather than an opacity
+  // trick on the same one.
+  --accent: #3ec78d;
+  --accent-hover: #55d49e;
+  --accent-active: #2fae79;
+  --accent-subtle: #0f2a20;
+  --accent-border: #1f5642;
+  --accent-text: #5cd3a0;
+
+  --funnel-1: #1e4838;
+  --funnel-2: #2b8a63;
+  --funnel-3: #3ec78d;
+
+  --positive: #4fc98d;
+  --positive-subtle: #10291e;
+  --negative: #ef7a72;
+  --negative-subtle: #2d1614;
+  --warning: #d5a24a;
+  --warning-subtle: #2b2113;
+
+  --focus-ring: #3ec78d;
+  --selection-bg: #1d5240;
+  --selection-text: #d8f3e6;
+
+  --shadow-tint-a: rgb(0 0 0 / 0.4);
+  --shadow-tint-b: rgb(0 0 0 / 0.28);
+  --shadow-tint-c: rgb(0 0 0 / 0.6);
+
+  --scrollbar-thumb: #333d39;
+  --scrollbar-thumb-hover: #465350;
+
+  --skeleton-base: #1a201e;
+  --skeleton-sheen: #232b28;
+}
