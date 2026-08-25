@@ -20,11 +20,14 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": false,
-    "isolatedModules": true,
-
-    "paths": {
-      "@shared/*": ["../shared/*"]
-    }
+    "isolatedModules": true
   },
+
+  // `rootDir` is the repo root so `shared/` compiles alongside `server/` and
+  // the emitted tree keeps their relative positions. The server imports the
+  // contract by relative path rather than through a `paths` alias: TypeScript
+  // resolves `paths` for type-checking only and does NOT rewrite the emitted
+  // import specifier, so an aliased runtime import type-checks cleanly and
+  // then throws ERR_MODULE_NOT_FOUND under plain `node`.
   "include": ["src/**/*.ts", "tests/**/*.ts", "../shared/**/*.ts"]
 }

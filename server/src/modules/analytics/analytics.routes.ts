@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import type { VideoAnalyticsResponse } from '@shared/api';
+import type { VideoAnalyticsResponse } from '../../../../shared/api.js';
 import type { Db } from '../../db/client.js';
 import { asyncHandler } from '../../lib/asyncHandler.js';
 import { parsedQuery, validateQuery } from '../../middleware/validate.js';

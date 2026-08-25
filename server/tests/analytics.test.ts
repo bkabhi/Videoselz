@@ -3,7 +3,7 @@ import request from 'supertest';
 import type { Express } from 'express';
 import { createApp } from '../src/app.js';
 import type { Db } from '../src/db/client.js';
-import type { VideoAnalyticsResponse } from '@shared/api';
+import type { VideoAnalyticsResponse } from '../../shared/api.js';
 import { createTestDb, seedFixture } from './helpers.js';
 
 let db: Db;

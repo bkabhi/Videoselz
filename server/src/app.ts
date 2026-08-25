@@ -1,6 +1,6 @@
 import express, { type Express } from 'express';
 import cors from 'cors';
-import type { HealthResponse } from '@shared/api';
+import type { HealthResponse } from '../../shared/api.js';
 import { config } from './config.js';
 import type { Db } from './db/client.js';
 import { asyncHandler } from './lib/asyncHandler.js';

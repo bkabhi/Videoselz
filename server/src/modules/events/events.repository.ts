@@ -1,5 +1,5 @@
 import type { Db } from '../../db/client.js';
-import type { EventType } from '@shared/api';
+import type { EventType } from '../../../../shared/api.js';
 
 export interface InsertedEvent {
   id: number;

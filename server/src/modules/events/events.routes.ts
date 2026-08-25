@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import type { CreateEventResponse } from '@shared/api';
+import type { CreateEventResponse } from '../../../../shared/api.js';
 import type { Db } from '../../db/client.js';
 import { asyncHandler } from '../../lib/asyncHandler.js';
 import { validateBody } from '../../middleware/validate.js';

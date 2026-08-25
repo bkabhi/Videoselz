@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PERIODS, SORT_DIRECTIONS, SORT_FIELDS } from '@shared/api';
+import { PERIODS, SORT_DIRECTIONS, SORT_FIELDS } from '../../../../shared/api.js';
 import { config } from '../../config.js';
 
 /**

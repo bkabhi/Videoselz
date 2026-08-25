@@ -5,7 +5,7 @@ import type {
   SortDirection,
   SortField,
   VideoAnalyticsRow,
-} from '@shared/api';
+} from '../../../../shared/api.js';
 
 /* --------------------------------------------------------------------- */
 /* Window resolution                                                     */
@@ -43,6 +43,7 @@ const SORT_EXPRESSIONS: Record<SortField, string> = {
   views: 'views',
   clicks: 'clicks',
   addToCarts: 'add_to_carts',
+  clickThroughRate: 'CAST(clicks AS REAL) / NULLIF(views, 0)',
   // Conversion rate is *displayed* client-side (per the brief), but sorting it
   // must happen in SQL: ordering only the current page would produce a
   // different answer per page. NULLIF guards the zero-view case — dividing by

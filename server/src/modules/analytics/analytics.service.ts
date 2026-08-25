@@ -1,5 +1,5 @@
 import type { Db } from '../../db/client.js';
-import type { VideoAnalyticsResponse } from '@shared/api';
+import type { VideoAnalyticsResponse } from '../../../../shared/api.js';
 import { getVideoAnalytics } from './analytics.repository.js';
 import type { VideoAnalyticsQueryInput } from './analytics.validation.js';
 

@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from '@shared/api';
+import type { ApiErrorBody } from '../../../shared/api.js';
 
 type FieldIssue = NonNullable<ApiErrorBody['error']['details']>[number];
 

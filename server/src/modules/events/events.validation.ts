@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EVENT_TYPES } from '@shared/api';
+import { EVENT_TYPES } from '../../../../shared/api.js';
 
 /**
  * Ingest payload for `POST /api/events`.

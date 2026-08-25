@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import type { VideoListResponse } from '@shared/api';
+import type { VideoListResponse } from '../../../../shared/api.js';
 import type { Db } from '../../db/client.js';
 import { asyncHandler } from '../../lib/asyncHandler.js';
 import { listVideos } from '../analytics/analytics.repository.js';
