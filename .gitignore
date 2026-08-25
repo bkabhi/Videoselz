@@ -39,3 +39,6 @@ coverage/
 
 # Take-home brief (not part of the deliverable)
 *.pdf
+
+# Local editor/agent tooling
+.claude/

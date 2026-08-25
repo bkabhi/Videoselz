@@ -25,6 +25,7 @@ export const SORT_FIELDS = [
   'views',
   'clicks',
   'addToCarts',
+  'clickThroughRate',
   'conversionRate',
   'lastEventAt',
 ] as const;
