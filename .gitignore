@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Local database artifacts — regenerate with `npm run db:reset`
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+server/data/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Test + coverage
+coverage/
+.vitest/
+
+# Take-home brief (not part of the deliverable)
+*.pdf
