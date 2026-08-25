@@ -1,0 +1,471 @@
+.panel {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  /* Clips the sticky header's own background against the rounded corner. */
+  overflow: hidden;
+}
+
+/* -- Toolbar ------------------------------------------------------------- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+
+  @include below('sm') {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.toolbarEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* A quiet, non-blocking signal that a background refresh is running. The
+   table keeps its previous rows visible underneath. */
+.refreshing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+
+  @include motion-safe {
+    animation: fadeIn var(--duration-base) var(--ease-out);
+  }
+}
+
+.refreshingIcon {
+  @include motion-safe {
+    animation: spin 900ms linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* -- Table --------------------------------------------------------------- */
+
+.scroll {
+  /* Wide tables scroll inside their own container. The page body must never
+     scroll horizontally. */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.table {
+  width: 100%;
+  min-width: 54rem;
+  font-size: var(--text-sm);
+
+  @include below('md') {
+    min-width: 40rem;
+  }
+}
+
+.headCell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  padding: 0;
+  height: 2.25rem;
+
+  text-align: left;
+  white-space: nowrap;
+
+  background-color: var(--surface-sunken);
+  border-bottom: 1px solid var(--border-default);
+
+  @include label-caps;
+}
+
+.numericHead {
+  text-align: right;
+}
+
+/* The whole header cell is the button, so the hit target matches what the
+   user sees as clickable. */
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  width: 100%;
+  height: 2.25rem;
+  padding: 0 var(--space-4);
+
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+
+  @include focus-ring(-2px);
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-active);
+  }
+}
+
+.numericHead .sortButton {
+  justify-content: flex-end;
+}
+
+.staticHead {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  height: 2.25rem;
+}
+
+.sortIcon {
+  color: var(--text-tertiary);
+  opacity: 0;
+
+  @include motion-safe {
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+}
+
+/* The inactive indicator appears on hover as an affordance, and stays
+   visible once the column is the active sort. */
+.sortButton:hover .sortIcon {
+  opacity: 0.55;
+}
+
+.sortActive {
+  color: var(--accent-text);
+  opacity: 1;
+}
+
+.sortButton:hover .sortActive {
+  opacity: 1;
+}
+
+.row {
+  border-bottom: 1px solid var(--border-subtle);
+
+  @include motion-safe {
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  &:hover {
+    background-color: var(--surface-hover);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+/* The one authored moment: when the simulator records events, the affected
+   row pulses once so the merchant sees which row their action changed. */
+.rowPulse {
+  @include motion-safe {
+    animation: pulse 1.5s var(--ease-out);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background-color: var(--accent-subtle);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+  70% {
+    background-color: var(--accent-subtle);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: inset 2px 0 0 transparent;
+  }
+}
+
+.cell {
+  padding: var(--space-2) var(--space-4);
+  height: var(--row-height);
+  color: var(--text-primary);
+  vertical-align: middle;
+
+  /* The video cell is a `th scope="row"`, and the UA stylesheet centres `th`.
+     Without this the first column's text sits off-axis from its own header. */
+  text-align: left;
+
+  /* Row headers must not inherit `th`'s bold default — weight in this table
+     is assigned by role, not by element. */
+  font-weight: var(--weight-regular);
+}
+
+.numeric {
+  text-align: right;
+  @include numeric;
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+/* -- Video cell ---------------------------------------------------------- */
+
+.videoCell {
+  max-width: 20rem;
+  min-width: 14rem;
+}
+
+.videoTitle {
+  display: block;
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  @include truncate;
+}
+
+.videoMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 1px;
+
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.productName {
+  @include truncate;
+}
+
+.price {
+  flex-shrink: 0;
+  @include numeric;
+
+  &::before {
+    content: '·';
+    margin-right: var(--space-2);
+  }
+}
+
+/* -- Conversion cell ----------------------------------------------------- */
+
+.conversion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.conversionValue {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  @include numeric;
+}
+
+.conversionNull {
+  color: var(--text-tertiary);
+  font-weight: var(--weight-regular);
+}
+
+/* Scaled against the best rate on this page, so the bar answers "compared to
+   my other videos" rather than "compared to a theoretical 100%", which would
+   render every real row as an invisible sliver. */
+.conversionTrack {
+  width: 3.5rem;
+  height: 3px;
+  background-color: var(--surface-sunken);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+/* No transition here. Ten 3px bars animating their width on every refetch is
+   layout work spent on movement nobody is watching — the number above the bar
+   is what the merchant reads. */
+.conversionFill {
+  height: 100%;
+  background-color: var(--accent);
+  border-radius: var(--radius-full);
+}
+
+/* -- Responsive column drops -------------------------------------------- */
+
+/* Progressive disclosure rather than a card restructure.
+ *
+ * Rewriting the table into stacked blocks means `display: block` on the table
+ * elements, which strips the table role out of the accessibility tree and has
+ * to be rebuilt by hand with ARIA. Dropping columns instead keeps real table
+ * semantics — and header/cell association — at every width.
+ *
+ * The order of removal follows what the merchant came for: the derived ratios
+ * and the trend go first, then the intermediate funnel counts (which the strip
+ * above already totals), and Views plus conversion rate survive to the
+ * narrowest width because they are the question itself.
+ */
+
+/* Below 900px: supporting ratios and the trend. */
+@include below('md') {
+  .optional {
+    display: none;
+  }
+}
+
+/* Below 640px: the intermediate funnel counts. What remains — video, views,
+   conversion rate — fits a phone without horizontal scrolling. */
+@include below('sm') {
+  .compactHidden {
+    display: none;
+  }
+
+  .table {
+    min-width: 0;
+    /* `auto` layout sizes columns from their max-content width, and the
+       product/price line under each title never wraps — which pushed the
+       video column to 280px and reintroduced horizontal scrolling. `fixed`
+       makes the declared width authoritative so truncation actually engages. */
+    table-layout: fixed;
+  }
+
+  /* Explicit shares. Views and conversion rate are short tabular values and
+     need very little; everything left over goes to the title, which is the
+     only column whose content actually varies in length. */
+  .videoCell {
+    width: 62%;
+  }
+
+  .numericHead {
+    width: 19%;
+  }
+
+  /* The price truncates to a useless "Ast…" at this width. The product name
+     alone still identifies the row, and the price is not what the merchant
+     opened a performance table to read. */
+  .price {
+    display: none;
+  }
+
+  /* The comparison bar costs more width than it earns once there are only
+     three columns; the percentage itself still ranks the rows. */
+  .conversionTrack {
+    display: none;
+  }
+
+  .cell,
+  .sortButton,
+  .staticHead {
+    padding-inline: var(--space-3);
+  }
+
+  .videoCell {
+    min-width: 0;
+    /* Long titles wrap to two lines here instead of truncating; on a phone
+       there is no tooltip to recover the hidden text from. */
+    max-width: none;
+    white-space: normal;
+  }
+
+  .videoMeta {
+    min-width: 0;
+  }
+
+  .videoTitle {
+    white-space: normal;
+    overflow: visible;
+    line-height: var(--leading-snug);
+  }
+}
+
+/* -- Empty + error states ------------------------------------------------ */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.stateIcon {
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-1);
+}
+
+.stateTitle {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.stateBody {
+  max-width: 30rem;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.stateAction {
+  margin-top: var(--space-3);
+}
+
+.errorIcon {
+  color: var(--negative);
+}
+
+/* -- Skeleton ------------------------------------------------------------ */
+
+.skeleton {
+  height: 0.75rem;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+      90deg,
+      var(--skeleton-base) 0%,
+      var(--skeleton-sheen) 50%,
+      var(--skeleton-base) 100%
+    )
+    0 0 / 300% 100%;
+
+  @include motion-safe {
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.skeletonWide {
+  height: 0.8125rem;
+  margin-bottom: var(--space-2);
+}
+
+.skeletonNarrow {
+  width: 60%;
+  height: 0.625rem;
+}
+
+.skeletonRight {
+  margin-left: auto;
+  width: 2.5rem;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -150% 0;
+  }
+}
