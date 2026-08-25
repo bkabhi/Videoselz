@@ -1,0 +1,123 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  padding: 0 var(--space-3);
+  height: 2rem;
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  @include focus-ring;
+
+  @include motion-safe {
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+/* -- Variants ------------------------------------------------------------ */
+
+.primary {
+  color: var(--text-inverse);
+  background-color: var(--accent);
+  border-color: var(--accent);
+
+  &:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--accent-active);
+    border-color: var(--accent-active);
+  }
+}
+
+.secondary {
+  color: var(--text-primary);
+  background-color: var(--surface-raised);
+  border-color: var(--border-default);
+
+  &:hover:not(:disabled) {
+    background-color: var(--surface-hover);
+    border-color: var(--border-strong);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--surface-active);
+  }
+}
+
+.ghost {
+  color: var(--text-secondary);
+
+  &:hover:not(:disabled) {
+    color: var(--text-primary);
+    background-color: var(--surface-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--surface-active);
+  }
+}
+
+/* -- Modifiers ----------------------------------------------------------- */
+
+/* Square, for a lone icon. Width matches height so the hit target stays even. */
+.iconOnly {
+  width: 2rem;
+  padding: 0;
+}
+
+.loading {
+  // The label stays in the DOM at full width so the button does not resize
+  // mid-action, which would move whatever sits beside it.
+  color: transparent;
+  position: relative;
+  cursor: progress;
+
+  .spinner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--text-inverse);
+  }
+}
+
+.secondary.loading .spinner,
+.ghost.loading .spinner {
+  color: var(--text-secondary);
+}
+
+.spinnerRing {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 1.75px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+
+  @include motion-safe {
+    animation: spin 620ms linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

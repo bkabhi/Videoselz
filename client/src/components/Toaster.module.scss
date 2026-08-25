@@ -1,0 +1,113 @@
+.region {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 60;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  width: min(23rem, calc(100vw - var(--space-8)));
+
+  /* The region spans the width of its widest toast, so it must not intercept
+     clicks on the content behind it. Individual toasts opt back in. */
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+
+  background-color: var(--surface-overlay);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  /* One of only two places a shadow is used: a toast genuinely floats. */
+  box-shadow: var(--shadow-lg);
+
+  @include motion-safe {
+    animation: enter var(--duration-slow) var(--ease-out);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 1px;
+
+  border-radius: var(--radius-full);
+}
+
+.success .badge {
+  color: var(--positive);
+  background-color: var(--positive-subtle);
+}
+
+.error .badge {
+  color: var(--negative);
+  background-color: var(--negative-subtle);
+}
+
+.neutral .badge {
+  color: var(--text-secondary);
+  background-color: var(--surface-sunken);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+}
+
+.description {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.dismiss {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  color: var(--text-tertiary);
+  border-radius: var(--radius-xs);
+
+  @include focus-ring(1px);
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-hover);
+  }
+}
