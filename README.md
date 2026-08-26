@@ -8,7 +8,7 @@ Express + SQLite API, React + TypeScript front end, no Tailwind.
 
 ---
 
-## ⚠️ Submission checklist — fill these in before sending
+## Submission checklist — fill these in before sending
 
 > These four items are required by the assignment brief and cannot be
 > generated from the code. Replace each placeholder, then delete this block.

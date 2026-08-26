@@ -47,6 +47,17 @@ export default defineConfig({
     fs: { allow: ['..'] },
   },
 
+  // `vite preview` serves the production bundle but does NOT inherit
+  // `server.proxy`, so without this `npm run preview` would 404 on every
+  // /api call and look broken. Same target, so the built app can be checked
+  // against the real API.
+  preview: {
+    port: 4173,
+    proxy: {
+      '/api': { target: API_TARGET, changeOrigin: true },
+    },
+  },
+
   build: {
     outDir: 'dist',
     sourcemap: true,
