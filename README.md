@@ -15,10 +15,10 @@ Express + SQLite API, React + TypeScript front end, no Tailwind.
 
 | Item | Link |
 | --- | --- |
-| **30-second YouTube pitch** (unlisted or private) | `<!-- TODO: paste YouTube URL -->` |
-| **3–5 min technical walkthrough** (Loom / screen recording) | `<!-- TODO: paste Loom URL -->` |
-| **Other public repositories** — open-source or personal project contributions | `<!-- TODO: paste GitHub/GitLab profile + notable repo URLs -->` |
-| **This repository** | `<!-- TODO: paste this repo's public GitHub URL -->` |
+| **30-second YouTube pitch** (unlisted or private) | `` |
+| **3–5 min technical walkthrough** (Loom / screen recording) | `` |
+| **Other public repositories** — open-source or personal project contributions | [https://github.com/bkabhi/](https://github.com/bkabhi/) |
+| **This repository** | [https://github.com/bkabhi/Videoselz](https://github.com/bkabhi/Videoselz) |
 
 ---
 
